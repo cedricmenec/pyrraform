@@ -43,3 +43,8 @@ def test_generate_command_with_single_dash_options():
     expected_result = ['command', '-option1', '1', '-option2', 'value']
     result = runner._generate_subprocess_command()
     assert result == expected_result
+
+def test_last_command_output():
+    cmd = ShellCommand()
+    runner = ShellCommandRunner()
+    runner.run(cmd)
