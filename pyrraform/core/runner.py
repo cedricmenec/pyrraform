@@ -1,7 +1,7 @@
-from typing import List
+from subprocess import Popen, PIPE
+from typing import List, Optional
 
 from pyrraform.core.models.shellcommand import ShellCommand, ShellCommandOutput
-import subprocess
 
 
 class ShellCommandRunner:
@@ -13,10 +13,15 @@ class ShellCommandRunner:
 
         """
         self._command: ShellCommand = command
+        self._last_command_output: Optional[ShellCommandOutput] = None
 
     @property
     def command(self):
         return self._command
+
+    @property
+    def last_command_output(self):
+        return self._last_command_output
 
     def _generate_subprocess_command(self) -> List[str]:
         """Transform a ShellCommand object into a command format accepted by subprocess module.
@@ -61,10 +66,10 @@ class ShellCommandRunner:
 
         """
         subprocess_cmd = self._generate_subprocess_command()
-        process = subprocess.Popen(subprocess_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = Popen(subprocess_cmd, stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
 
-        command_output = ShellCommandOutput(return_code=process.returncode,
-                                            error=str(stderr, 'utf-8'),
-                                            output=str(stdout, 'utf-8'))
-        return command_output
+        self._last_command_output = ShellCommandOutput(return_code=process.returncode,
+                                                       error=str(stderr, 'utf-8'),
+                                                       output=str(stdout, 'utf-8'))
+        return self._last_command_output

@@ -78,6 +78,9 @@ class ShellCommand:
     def get_flag(self, name) -> str:
         return self._prepend_prefix(name)
 
+    def has_flag(self, name) -> bool:
+        return name in self.flags
+
 
 class ShellCommandOutput:
     def __init__(self, return_code: int, error: Optional[str] = None, output: Optional[str] = None):

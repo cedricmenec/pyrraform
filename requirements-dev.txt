@@ -2,4 +2,5 @@
 
 nox
 pytest
+pytest-mock
 coverage

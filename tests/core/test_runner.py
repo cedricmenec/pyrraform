@@ -44,7 +44,17 @@ def test_generate_command_with_single_dash_options():
     result = runner._generate_subprocess_command()
     assert result == expected_result
 
-def test_last_command_output():
-    cmd = ShellCommand()
-    runner = ShellCommandRunner()
-    runner.run(cmd)
+# def test_last_command_output(mocker: MockerFixture):
+#     """Scenario: A ShellCommandRunner store the last_command_output
+#     Given a ShellCommandRunner and an arbitrary ShellCommand,
+#     When the runner properly run the command,
+#     Then the last_command_output is set with the CommandOutput returned by the execution
+#     """
+#
+#     mocker.patch('pyrraform.core.runner.subprocess.Popen')
+#     mocker.patch('pyrraform.core.runner.subprocess.Popen.communicate',
+#                  return_value=("", "output"))
+#
+#     cmd = ShellCommand("command")
+#     runner = ShellCommandRunner(cmd)
+#     cmd_output = runner.run()
